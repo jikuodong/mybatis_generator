@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.jikuodong.springboot.mapper.CellsMapper">
+  <resultMap id="BaseResultMap" type="net.jikuodong.springboot.po.Cells">
+    <id column="pat_id" jdbcType="VARCHAR" property="patId" />
+    <result column="case_id" jdbcType="VARCHAR" property="caseId" />
+    <result column="sample_id" jdbcType="VARCHAR" property="sampleId" />
+    <result column="slide_id" jdbcType="VARCHAR" property="slideId" />
+    <result column="layer_id" jdbcType="VARCHAR" property="layerId" />
+    <result column="hospital_id" jdbcType="VARCHAR" property="hospitalId" />
+    <result column="logic_id" jdbcType="VARCHAR" property="logicId" />
+    <result column="cell_type" jdbcType="INTEGER" property="cellType" />
+    <result column="start_x" jdbcType="INTEGER" property="startX" />
+    <result column="start_y" jdbcType="INTEGER" property="startY" />
+    <result column="width" jdbcType="INTEGER" property="width" />
+    <result column="height" jdbcType="INTEGER" property="height" />
+    <result column="nucleus_start_x" jdbcType="INTEGER" property="nucleusStartX" />
+    <result column="nucleus_start_y" jdbcType="INTEGER" property="nucleusStartY" />
+    <result column="nucleus_start_width" jdbcType="INTEGER" property="nucleusStartWidth" />
+    <result column="nucleus_start_height" jdbcType="INTEGER" property="nucleusStartHeight" />
+    <result column="dna_index" jdbcType="DOUBLE" property="dnaIndex" />
+    <result column="nc_rate" jdbcType="DOUBLE" property="ncRate" />
+    <result column="cc_rate" jdbcType="DOUBLE" property="ccRate" />
+    <result column="nucleus_style" jdbcType="DOUBLE" property="nucleusStyle" />
+    <result column="nucleus_texture" jdbcType="DOUBLE" property="nucleusTexture" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    pat_id, case_id, sample_id, slide_id, layer_id, hospital_id, logic_id, cell_type, 
+    start_x, start_y, width, height, nucleus_start_x, nucleus_start_y, nucleus_start_width, 
+    nucleus_start_height, dna_index, nc_rate, cc_rate, nucleus_style, nucleus_texture
+  </sql>
+  <select id="selectByExample" parameterType="net.jikuodong.springboot.po.CellsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cells
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cells
+    where pat_id = #{patId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cells
+    where pat_id = #{patId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.jikuodong.springboot.po.CellsExample">
+    delete from cells
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.jikuodong.springboot.po.Cells">
+    insert into cells (pat_id, case_id, sample_id, 
+      slide_id, layer_id, hospital_id, 
+      logic_id, cell_type, start_x, 
+      start_y, width, height, 
+      nucleus_start_x, nucleus_start_y, nucleus_start_width, 
+      nucleus_start_height, dna_index, nc_rate, 
+      cc_rate, nucleus_style, nucleus_texture
+      )
+    values (#{patId,jdbcType=VARCHAR}, #{caseId,jdbcType=VARCHAR}, #{sampleId,jdbcType=VARCHAR}, 
+      #{slideId,jdbcType=VARCHAR}, #{layerId,jdbcType=VARCHAR}, #{hospitalId,jdbcType=VARCHAR}, 
+      #{logicId,jdbcType=VARCHAR}, #{cellType,jdbcType=INTEGER}, #{startX,jdbcType=INTEGER}, 
+      #{startY,jdbcType=INTEGER}, #{width,jdbcType=INTEGER}, #{height,jdbcType=INTEGER}, 
+      #{nucleusStartX,jdbcType=INTEGER}, #{nucleusStartY,jdbcType=INTEGER}, #{nucleusStartWidth,jdbcType=INTEGER}, 
+      #{nucleusStartHeight,jdbcType=INTEGER}, #{dnaIndex,jdbcType=DOUBLE}, #{ncRate,jdbcType=DOUBLE}, 
+      #{ccRate,jdbcType=DOUBLE}, #{nucleusStyle,jdbcType=DOUBLE}, #{nucleusTexture,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.jikuodong.springboot.po.Cells">
+    insert into cells
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="patId != null">
+        pat_id,
+      </if>
+      <if test="caseId != null">
+        case_id,
+      </if>
+      <if test="sampleId != null">
+        sample_id,
+      </if>
+      <if test="slideId != null">
+        slide_id,
+      </if>
+      <if test="layerId != null">
+        layer_id,
+      </if>
+      <if test="hospitalId != null">
+        hospital_id,
+      </if>
+      <if test="logicId != null">
+        logic_id,
+      </if>
+      <if test="cellType != null">
+        cell_type,
+      </if>
+      <if test="startX != null">
+        start_x,
+      </if>
+      <if test="startY != null">
+        start_y,
+      </if>
+      <if test="width != null">
+        width,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="nucleusStartX != null">
+        nucleus_start_x,
+      </if>
+      <if test="nucleusStartY != null">
+        nucleus_start_y,
+      </if>
+      <if test="nucleusStartWidth != null">
+        nucleus_start_width,
+      </if>
+      <if test="nucleusStartHeight != null">
+        nucleus_start_height,
+      </if>
+      <if test="dnaIndex != null">
+        dna_index,
+      </if>
+      <if test="ncRate != null">
+        nc_rate,
+      </if>
+      <if test="ccRate != null">
+        cc_rate,
+      </if>
+      <if test="nucleusStyle != null">
+        nucleus_style,
+      </if>
+      <if test="nucleusTexture != null">
+        nucleus_texture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="patId != null">
+        #{patId,jdbcType=VARCHAR},
+      </if>
+      <if test="caseId != null">
+        #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleId != null">
+        #{sampleId,jdbcType=VARCHAR},
+      </if>
+      <if test="slideId != null">
+        #{slideId,jdbcType=VARCHAR},
+      </if>
+      <if test="layerId != null">
+        #{layerId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="logicId != null">
+        #{logicId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellType != null">
+        #{cellType,jdbcType=INTEGER},
+      </if>
+      <if test="startX != null">
+        #{startX,jdbcType=INTEGER},
+      </if>
+      <if test="startY != null">
+        #{startY,jdbcType=INTEGER},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=INTEGER},
+      </if>
+      <if test="nucleusStartX != null">
+        #{nucleusStartX,jdbcType=INTEGER},
+      </if>
+      <if test="nucleusStartY != null">
+        #{nucleusStartY,jdbcType=INTEGER},
+      </if>
+      <if test="nucleusStartWidth != null">
+        #{nucleusStartWidth,jdbcType=INTEGER},
+      </if>
+      <if test="nucleusStartHeight != null">
+        #{nucleusStartHeight,jdbcType=INTEGER},
+      </if>
+      <if test="dnaIndex != null">
+        #{dnaIndex,jdbcType=DOUBLE},
+      </if>
+      <if test="ncRate != null">
+        #{ncRate,jdbcType=DOUBLE},
+      </if>
+      <if test="ccRate != null">
+        #{ccRate,jdbcType=DOUBLE},
+      </if>
+      <if test="nucleusStyle != null">
+        #{nucleusStyle,jdbcType=DOUBLE},
+      </if>
+      <if test="nucleusTexture != null">
+        #{nucleusTexture,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.jikuodong.springboot.po.CellsExample" resultType="java.lang.Long">
+    select count(*) from cells
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cells
+    <set>
+      <if test="record.patId != null">
+        pat_id = #{record.patId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseId != null">
+        case_id = #{record.caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sampleId != null">
+        sample_id = #{record.sampleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slideId != null">
+        slide_id = #{record.slideId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.layerId != null">
+        layer_id = #{record.layerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hospitalId != null">
+        hospital_id = #{record.hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logicId != null">
+        logic_id = #{record.logicId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cellType != null">
+        cell_type = #{record.cellType,jdbcType=INTEGER},
+      </if>
+      <if test="record.startX != null">
+        start_x = #{record.startX,jdbcType=INTEGER},
+      </if>
+      <if test="record.startY != null">
+        start_y = #{record.startY,jdbcType=INTEGER},
+      </if>
+      <if test="record.width != null">
+        width = #{record.width,jdbcType=INTEGER},
+      </if>
+      <if test="record.height != null">
+        height = #{record.height,jdbcType=INTEGER},
+      </if>
+      <if test="record.nucleusStartX != null">
+        nucleus_start_x = #{record.nucleusStartX,jdbcType=INTEGER},
+      </if>
+      <if test="record.nucleusStartY != null">
+        nucleus_start_y = #{record.nucleusStartY,jdbcType=INTEGER},
+      </if>
+      <if test="record.nucleusStartWidth != null">
+        nucleus_start_width = #{record.nucleusStartWidth,jdbcType=INTEGER},
+      </if>
+      <if test="record.nucleusStartHeight != null">
+        nucleus_start_height = #{record.nucleusStartHeight,jdbcType=INTEGER},
+      </if>
+      <if test="record.dnaIndex != null">
+        dna_index = #{record.dnaIndex,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ncRate != null">
+        nc_rate = #{record.ncRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ccRate != null">
+        cc_rate = #{record.ccRate,jdbcType=DOUBLE},
+      </if>
+      <if test="record.nucleusStyle != null">
+        nucleus_style = #{record.nucleusStyle,jdbcType=DOUBLE},
+      </if>
+      <if test="record.nucleusTexture != null">
+        nucleus_texture = #{record.nucleusTexture,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cells
+    set pat_id = #{record.patId,jdbcType=VARCHAR},
+      case_id = #{record.caseId,jdbcType=VARCHAR},
+      sample_id = #{record.sampleId,jdbcType=VARCHAR},
+      slide_id = #{record.slideId,jdbcType=VARCHAR},
+      layer_id = #{record.layerId,jdbcType=VARCHAR},
+      hospital_id = #{record.hospitalId,jdbcType=VARCHAR},
+      logic_id = #{record.logicId,jdbcType=VARCHAR},
+      cell_type = #{record.cellType,jdbcType=INTEGER},
+      start_x = #{record.startX,jdbcType=INTEGER},
+      start_y = #{record.startY,jdbcType=INTEGER},
+      width = #{record.width,jdbcType=INTEGER},
+      height = #{record.height,jdbcType=INTEGER},
+      nucleus_start_x = #{record.nucleusStartX,jdbcType=INTEGER},
+      nucleus_start_y = #{record.nucleusStartY,jdbcType=INTEGER},
+      nucleus_start_width = #{record.nucleusStartWidth,jdbcType=INTEGER},
+      nucleus_start_height = #{record.nucleusStartHeight,jdbcType=INTEGER},
+      dna_index = #{record.dnaIndex,jdbcType=DOUBLE},
+      nc_rate = #{record.ncRate,jdbcType=DOUBLE},
+      cc_rate = #{record.ccRate,jdbcType=DOUBLE},
+      nucleus_style = #{record.nucleusStyle,jdbcType=DOUBLE},
+      nucleus_texture = #{record.nucleusTexture,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.jikuodong.springboot.po.Cells">
+    update cells
+    <set>
+      <if test="caseId != null">
+        case_id = #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="sampleId != null">
+        sample_id = #{sampleId,jdbcType=VARCHAR},
+      </if>
+      <if test="slideId != null">
+        slide_id = #{slideId,jdbcType=VARCHAR},
+      </if>
+      <if test="layerId != null">
+        layer_id = #{layerId,jdbcType=VARCHAR},
+      </if>
+      <if test="hospitalId != null">
+        hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      </if>
+      <if test="logicId != null">
+        logic_id = #{logicId,jdbcType=VARCHAR},
+      </if>
+      <if test="cellType != null">
+        cell_type = #{cellType,jdbcType=INTEGER},
+      </if>
+      <if test="startX != null">
+        start_x = #{startX,jdbcType=INTEGER},
+      </if>
+      <if test="startY != null">
+        start_y = #{startY,jdbcType=INTEGER},
+      </if>
+      <if test="width != null">
+        width = #{width,jdbcType=INTEGER},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=INTEGER},
+      </if>
+      <if test="nucleusStartX != null">
+        nucleus_start_x = #{nucleusStartX,jdbcType=INTEGER},
+      </if>
+      <if test="nucleusStartY != null">
+        nucleus_start_y = #{nucleusStartY,jdbcType=INTEGER},
+      </if>
+      <if test="nucleusStartWidth != null">
+        nucleus_start_width = #{nucleusStartWidth,jdbcType=INTEGER},
+      </if>
+      <if test="nucleusStartHeight != null">
+        nucleus_start_height = #{nucleusStartHeight,jdbcType=INTEGER},
+      </if>
+      <if test="dnaIndex != null">
+        dna_index = #{dnaIndex,jdbcType=DOUBLE},
+      </if>
+      <if test="ncRate != null">
+        nc_rate = #{ncRate,jdbcType=DOUBLE},
+      </if>
+      <if test="ccRate != null">
+        cc_rate = #{ccRate,jdbcType=DOUBLE},
+      </if>
+      <if test="nucleusStyle != null">
+        nucleus_style = #{nucleusStyle,jdbcType=DOUBLE},
+      </if>
+      <if test="nucleusTexture != null">
+        nucleus_texture = #{nucleusTexture,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where pat_id = #{patId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.jikuodong.springboot.po.Cells">
+    update cells
+    set case_id = #{caseId,jdbcType=VARCHAR},
+      sample_id = #{sampleId,jdbcType=VARCHAR},
+      slide_id = #{slideId,jdbcType=VARCHAR},
+      layer_id = #{layerId,jdbcType=VARCHAR},
+      hospital_id = #{hospitalId,jdbcType=VARCHAR},
+      logic_id = #{logicId,jdbcType=VARCHAR},
+      cell_type = #{cellType,jdbcType=INTEGER},
+      start_x = #{startX,jdbcType=INTEGER},
+      start_y = #{startY,jdbcType=INTEGER},
+      width = #{width,jdbcType=INTEGER},
+      height = #{height,jdbcType=INTEGER},
+      nucleus_start_x = #{nucleusStartX,jdbcType=INTEGER},
+      nucleus_start_y = #{nucleusStartY,jdbcType=INTEGER},
+      nucleus_start_width = #{nucleusStartWidth,jdbcType=INTEGER},
+      nucleus_start_height = #{nucleusStartHeight,jdbcType=INTEGER},
+      dna_index = #{dnaIndex,jdbcType=DOUBLE},
+      nc_rate = #{ncRate,jdbcType=DOUBLE},
+      cc_rate = #{ccRate,jdbcType=DOUBLE},
+      nucleus_style = #{nucleusStyle,jdbcType=DOUBLE},
+      nucleus_texture = #{nucleusTexture,jdbcType=DOUBLE}
+    where pat_id = #{patId,jdbcType=VARCHAR}
+  </update>
+</mapper>

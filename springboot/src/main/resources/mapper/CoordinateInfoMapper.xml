@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.jikuodong.springboot.mapper.CoordinateInfoMapper">
+  <resultMap id="BaseResultMap" type="net.jikuodong.springboot.po.CoordinateInfo">
+    <id column="coordinate_id" jdbcType="VARCHAR" property="coordinateId" />
+    <result column="slide_material_id" jdbcType="VARCHAR" property="slideMaterialId" />
+    <result column="start_x" jdbcType="INTEGER" property="startX" />
+    <result column="start_y" jdbcType="INTEGER" property="startY" />
+    <result column="end_x" jdbcType="INTEGER" property="endX" />
+    <result column="end_y" jdbcType="INTEGER" property="endY" />
+    <result column="def1" jdbcType="INTEGER" property="def1" />
+    <result column="def2" jdbcType="INTEGER" property="def2" />
+    <result column="def3" jdbcType="VARCHAR" property="def3" />
+    <result column="def4" jdbcType="VARCHAR" property="def4" />
+    <result column="def5" jdbcType="VARCHAR" property="def5" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    coordinate_id, slide_material_id, start_x, start_y, end_x, end_y, def1, def2, def3, 
+    def4, def5
+  </sql>
+  <select id="selectByExample" parameterType="net.jikuodong.springboot.po.CoordinateInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from coordinate_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from coordinate_info
+    where coordinate_id = #{coordinateId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from coordinate_info
+    where coordinate_id = #{coordinateId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.jikuodong.springboot.po.CoordinateInfoExample">
+    delete from coordinate_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.jikuodong.springboot.po.CoordinateInfo">
+    insert into coordinate_info (coordinate_id, slide_material_id, start_x, 
+      start_y, end_x, end_y, 
+      def1, def2, def3, def4, 
+      def5)
+    values (#{coordinateId,jdbcType=VARCHAR}, #{slideMaterialId,jdbcType=VARCHAR}, #{startX,jdbcType=INTEGER}, 
+      #{startY,jdbcType=INTEGER}, #{endX,jdbcType=INTEGER}, #{endY,jdbcType=INTEGER}, 
+      #{def1,jdbcType=INTEGER}, #{def2,jdbcType=INTEGER}, #{def3,jdbcType=VARCHAR}, #{def4,jdbcType=VARCHAR}, 
+      #{def5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="net.jikuodong.springboot.po.CoordinateInfo">
+    insert into coordinate_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="coordinateId != null">
+        coordinate_id,
+      </if>
+      <if test="slideMaterialId != null">
+        slide_material_id,
+      </if>
+      <if test="startX != null">
+        start_x,
+      </if>
+      <if test="startY != null">
+        start_y,
+      </if>
+      <if test="endX != null">
+        end_x,
+      </if>
+      <if test="endY != null">
+        end_y,
+      </if>
+      <if test="def1 != null">
+        def1,
+      </if>
+      <if test="def2 != null">
+        def2,
+      </if>
+      <if test="def3 != null">
+        def3,
+      </if>
+      <if test="def4 != null">
+        def4,
+      </if>
+      <if test="def5 != null">
+        def5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="coordinateId != null">
+        #{coordinateId,jdbcType=VARCHAR},
+      </if>
+      <if test="slideMaterialId != null">
+        #{slideMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="startX != null">
+        #{startX,jdbcType=INTEGER},
+      </if>
+      <if test="startY != null">
+        #{startY,jdbcType=INTEGER},
+      </if>
+      <if test="endX != null">
+        #{endX,jdbcType=INTEGER},
+      </if>
+      <if test="endY != null">
+        #{endY,jdbcType=INTEGER},
+      </if>
+      <if test="def1 != null">
+        #{def1,jdbcType=INTEGER},
+      </if>
+      <if test="def2 != null">
+        #{def2,jdbcType=INTEGER},
+      </if>
+      <if test="def3 != null">
+        #{def3,jdbcType=VARCHAR},
+      </if>
+      <if test="def4 != null">
+        #{def4,jdbcType=VARCHAR},
+      </if>
+      <if test="def5 != null">
+        #{def5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.jikuodong.springboot.po.CoordinateInfoExample" resultType="java.lang.Long">
+    select count(*) from coordinate_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update coordinate_info
+    <set>
+      <if test="record.coordinateId != null">
+        coordinate_id = #{record.coordinateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.slideMaterialId != null">
+        slide_material_id = #{record.slideMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startX != null">
+        start_x = #{record.startX,jdbcType=INTEGER},
+      </if>
+      <if test="record.startY != null">
+        start_y = #{record.startY,jdbcType=INTEGER},
+      </if>
+      <if test="record.endX != null">
+        end_x = #{record.endX,jdbcType=INTEGER},
+      </if>
+      <if test="record.endY != null">
+        end_y = #{record.endY,jdbcType=INTEGER},
+      </if>
+      <if test="record.def1 != null">
+        def1 = #{record.def1,jdbcType=INTEGER},
+      </if>
+      <if test="record.def2 != null">
+        def2 = #{record.def2,jdbcType=INTEGER},
+      </if>
+      <if test="record.def3 != null">
+        def3 = #{record.def3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.def4 != null">
+        def4 = #{record.def4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.def5 != null">
+        def5 = #{record.def5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update coordinate_info
+    set coordinate_id = #{record.coordinateId,jdbcType=VARCHAR},
+      slide_material_id = #{record.slideMaterialId,jdbcType=VARCHAR},
+      start_x = #{record.startX,jdbcType=INTEGER},
+      start_y = #{record.startY,jdbcType=INTEGER},
+      end_x = #{record.endX,jdbcType=INTEGER},
+      end_y = #{record.endY,jdbcType=INTEGER},
+      def1 = #{record.def1,jdbcType=INTEGER},
+      def2 = #{record.def2,jdbcType=INTEGER},
+      def3 = #{record.def3,jdbcType=VARCHAR},
+      def4 = #{record.def4,jdbcType=VARCHAR},
+      def5 = #{record.def5,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.jikuodong.springboot.po.CoordinateInfo">
+    update coordinate_info
+    <set>
+      <if test="slideMaterialId != null">
+        slide_material_id = #{slideMaterialId,jdbcType=VARCHAR},
+      </if>
+      <if test="startX != null">
+        start_x = #{startX,jdbcType=INTEGER},
+      </if>
+      <if test="startY != null">
+        start_y = #{startY,jdbcType=INTEGER},
+      </if>
+      <if test="endX != null">
+        end_x = #{endX,jdbcType=INTEGER},
+      </if>
+      <if test="endY != null">
+        end_y = #{endY,jdbcType=INTEGER},
+      </if>
+      <if test="def1 != null">
+        def1 = #{def1,jdbcType=INTEGER},
+      </if>
+      <if test="def2 != null">
+        def2 = #{def2,jdbcType=INTEGER},
+      </if>
+      <if test="def3 != null">
+        def3 = #{def3,jdbcType=VARCHAR},
+      </if>
+      <if test="def4 != null">
+        def4 = #{def4,jdbcType=VARCHAR},
+      </if>
+      <if test="def5 != null">
+        def5 = #{def5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where coordinate_id = #{coordinateId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.jikuodong.springboot.po.CoordinateInfo">
+    update coordinate_info
+    set slide_material_id = #{slideMaterialId,jdbcType=VARCHAR},
+      start_x = #{startX,jdbcType=INTEGER},
+      start_y = #{startY,jdbcType=INTEGER},
+      end_x = #{endX,jdbcType=INTEGER},
+      end_y = #{endY,jdbcType=INTEGER},
+      def1 = #{def1,jdbcType=INTEGER},
+      def2 = #{def2,jdbcType=INTEGER},
+      def3 = #{def3,jdbcType=VARCHAR},
+      def4 = #{def4,jdbcType=VARCHAR},
+      def5 = #{def5,jdbcType=VARCHAR}
+    where coordinate_id = #{coordinateId,jdbcType=VARCHAR}
+  </update>
+</mapper>

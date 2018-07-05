@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.jikuodong.springboot.mapper.ReportResultMapper">
+  <resultMap id="BaseResultMap" type="net.jikuodong.springboot.po.ReportResult">
+    <id column="case_id" jdbcType="VARCHAR" property="caseId" />
+    <result column="first_diag_doctor" jdbcType="VARCHAR" property="firstDiagDoctor" />
+    <result column="return_diag_doctor" jdbcType="VARCHAR" property="returnDiagDoctor" />
+    <result column="group_diag_doctor" jdbcType="VARCHAR" property="groupDiagDoctor" />
+    <result column="diagonse_result" jdbcType="VARCHAR" property="diagonseResult" />
+    <result column="recommendation" jdbcType="VARCHAR" property="recommendation" />
+    <result column="cell_checked_result" jdbcType="VARCHAR" property="cellCheckedResult" />
+    <result column="cell_diagonse_desc" jdbcType="VARCHAR" property="cellDiagonseDesc" />
+    <result column="is_sync_flag" jdbcType="INTEGER" property="isSyncFlag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="net.jikuodong.springboot.po.ReportResult">
+    <result column="is_positive" jdbcType="LONGVARBINARY" property="isPositive" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    case_id, first_diag_doctor, return_diag_doctor, group_diag_doctor, diagonse_result, 
+    recommendation, cell_checked_result, cell_diagonse_desc, is_sync_flag
+  </sql>
+  <sql id="Blob_Column_List">
+    is_positive
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="net.jikuodong.springboot.po.ReportResultExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from report_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="net.jikuodong.springboot.po.ReportResultExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from report_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from report_result
+    where case_id = #{caseId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from report_result
+    where case_id = #{caseId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.jikuodong.springboot.po.ReportResultExample">
+    delete from report_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.jikuodong.springboot.po.ReportResult">
+    insert into report_result (case_id, first_diag_doctor, return_diag_doctor, 
+      group_diag_doctor, diagonse_result, recommendation, 
+      cell_checked_result, cell_diagonse_desc, is_sync_flag, 
+      is_positive)
+    values (#{caseId,jdbcType=VARCHAR}, #{firstDiagDoctor,jdbcType=VARCHAR}, #{returnDiagDoctor,jdbcType=VARCHAR}, 
+      #{groupDiagDoctor,jdbcType=VARCHAR}, #{diagonseResult,jdbcType=VARCHAR}, #{recommendation,jdbcType=VARCHAR}, 
+      #{cellCheckedResult,jdbcType=VARCHAR}, #{cellDiagonseDesc,jdbcType=VARCHAR}, #{isSyncFlag,jdbcType=INTEGER}, 
+      #{isPositive,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="net.jikuodong.springboot.po.ReportResult">
+    insert into report_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="caseId != null">
+        case_id,
+      </if>
+      <if test="firstDiagDoctor != null">
+        first_diag_doctor,
+      </if>
+      <if test="returnDiagDoctor != null">
+        return_diag_doctor,
+      </if>
+      <if test="groupDiagDoctor != null">
+        group_diag_doctor,
+      </if>
+      <if test="diagonseResult != null">
+        diagonse_result,
+      </if>
+      <if test="recommendation != null">
+        recommendation,
+      </if>
+      <if test="cellCheckedResult != null">
+        cell_checked_result,
+      </if>
+      <if test="cellDiagonseDesc != null">
+        cell_diagonse_desc,
+      </if>
+      <if test="isSyncFlag != null">
+        is_sync_flag,
+      </if>
+      <if test="isPositive != null">
+        is_positive,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="caseId != null">
+        #{caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="firstDiagDoctor != null">
+        #{firstDiagDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDiagDoctor != null">
+        #{returnDiagDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="groupDiagDoctor != null">
+        #{groupDiagDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="diagonseResult != null">
+        #{diagonseResult,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendation != null">
+        #{recommendation,jdbcType=VARCHAR},
+      </if>
+      <if test="cellCheckedResult != null">
+        #{cellCheckedResult,jdbcType=VARCHAR},
+      </if>
+      <if test="cellDiagonseDesc != null">
+        #{cellDiagonseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isSyncFlag != null">
+        #{isSyncFlag,jdbcType=INTEGER},
+      </if>
+      <if test="isPositive != null">
+        #{isPositive,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.jikuodong.springboot.po.ReportResultExample" resultType="java.lang.Long">
+    select count(*) from report_result
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update report_result
+    <set>
+      <if test="record.caseId != null">
+        case_id = #{record.caseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstDiagDoctor != null">
+        first_diag_doctor = #{record.firstDiagDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnDiagDoctor != null">
+        return_diag_doctor = #{record.returnDiagDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupDiagDoctor != null">
+        group_diag_doctor = #{record.groupDiagDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diagonseResult != null">
+        diagonse_result = #{record.diagonseResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommendation != null">
+        recommendation = #{record.recommendation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cellCheckedResult != null">
+        cell_checked_result = #{record.cellCheckedResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cellDiagonseDesc != null">
+        cell_diagonse_desc = #{record.cellDiagonseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSyncFlag != null">
+        is_sync_flag = #{record.isSyncFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.isPositive != null">
+        is_positive = #{record.isPositive,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update report_result
+    set case_id = #{record.caseId,jdbcType=VARCHAR},
+      first_diag_doctor = #{record.firstDiagDoctor,jdbcType=VARCHAR},
+      return_diag_doctor = #{record.returnDiagDoctor,jdbcType=VARCHAR},
+      group_diag_doctor = #{record.groupDiagDoctor,jdbcType=VARCHAR},
+      diagonse_result = #{record.diagonseResult,jdbcType=VARCHAR},
+      recommendation = #{record.recommendation,jdbcType=VARCHAR},
+      cell_checked_result = #{record.cellCheckedResult,jdbcType=VARCHAR},
+      cell_diagonse_desc = #{record.cellDiagonseDesc,jdbcType=VARCHAR},
+      is_sync_flag = #{record.isSyncFlag,jdbcType=INTEGER},
+      is_positive = #{record.isPositive,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update report_result
+    set case_id = #{record.caseId,jdbcType=VARCHAR},
+      first_diag_doctor = #{record.firstDiagDoctor,jdbcType=VARCHAR},
+      return_diag_doctor = #{record.returnDiagDoctor,jdbcType=VARCHAR},
+      group_diag_doctor = #{record.groupDiagDoctor,jdbcType=VARCHAR},
+      diagonse_result = #{record.diagonseResult,jdbcType=VARCHAR},
+      recommendation = #{record.recommendation,jdbcType=VARCHAR},
+      cell_checked_result = #{record.cellCheckedResult,jdbcType=VARCHAR},
+      cell_diagonse_desc = #{record.cellDiagonseDesc,jdbcType=VARCHAR},
+      is_sync_flag = #{record.isSyncFlag,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.jikuodong.springboot.po.ReportResult">
+    update report_result
+    <set>
+      <if test="firstDiagDoctor != null">
+        first_diag_doctor = #{firstDiagDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="returnDiagDoctor != null">
+        return_diag_doctor = #{returnDiagDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="groupDiagDoctor != null">
+        group_diag_doctor = #{groupDiagDoctor,jdbcType=VARCHAR},
+      </if>
+      <if test="diagonseResult != null">
+        diagonse_result = #{diagonseResult,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendation != null">
+        recommendation = #{recommendation,jdbcType=VARCHAR},
+      </if>
+      <if test="cellCheckedResult != null">
+        cell_checked_result = #{cellCheckedResult,jdbcType=VARCHAR},
+      </if>
+      <if test="cellDiagonseDesc != null">
+        cell_diagonse_desc = #{cellDiagonseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="isSyncFlag != null">
+        is_sync_flag = #{isSyncFlag,jdbcType=INTEGER},
+      </if>
+      <if test="isPositive != null">
+        is_positive = #{isPositive,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where case_id = #{caseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="net.jikuodong.springboot.po.ReportResult">
+    update report_result
+    set first_diag_doctor = #{firstDiagDoctor,jdbcType=VARCHAR},
+      return_diag_doctor = #{returnDiagDoctor,jdbcType=VARCHAR},
+      group_diag_doctor = #{groupDiagDoctor,jdbcType=VARCHAR},
+      diagonse_result = #{diagonseResult,jdbcType=VARCHAR},
+      recommendation = #{recommendation,jdbcType=VARCHAR},
+      cell_checked_result = #{cellCheckedResult,jdbcType=VARCHAR},
+      cell_diagonse_desc = #{cellDiagonseDesc,jdbcType=VARCHAR},
+      is_sync_flag = #{isSyncFlag,jdbcType=INTEGER},
+      is_positive = #{isPositive,jdbcType=LONGVARBINARY}
+    where case_id = #{caseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.jikuodong.springboot.po.ReportResult">
+    update report_result
+    set first_diag_doctor = #{firstDiagDoctor,jdbcType=VARCHAR},
+      return_diag_doctor = #{returnDiagDoctor,jdbcType=VARCHAR},
+      group_diag_doctor = #{groupDiagDoctor,jdbcType=VARCHAR},
+      diagonse_result = #{diagonseResult,jdbcType=VARCHAR},
+      recommendation = #{recommendation,jdbcType=VARCHAR},
+      cell_checked_result = #{cellCheckedResult,jdbcType=VARCHAR},
+      cell_diagonse_desc = #{cellDiagonseDesc,jdbcType=VARCHAR},
+      is_sync_flag = #{isSyncFlag,jdbcType=INTEGER}
+    where case_id = #{caseId,jdbcType=VARCHAR}
+  </update>
+</mapper>

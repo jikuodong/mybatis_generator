@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.jikuodong.springboot.mapper.SysDicTypeMapper">
+  <resultMap id="BaseResultMap" type="net.jikuodong.springboot.po.SysDicType">
+    <id column="dic_id" jdbcType="VARCHAR" property="dicId" />
+    <result column="dic_code" jdbcType="VARCHAR" property="dicCode" />
+    <result column="dic_name" jdbcType="VARCHAR" property="dicName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    dic_id, dic_code, dic_name
+  </sql>
+  <select id="selectByExample" parameterType="net.jikuodong.springboot.po.SysDicTypeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_dic_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_dic_type
+    where dic_id = #{dicId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_dic_type
+    where dic_id = #{dicId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="net.jikuodong.springboot.po.SysDicTypeExample">
+    delete from sys_dic_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="net.jikuodong.springboot.po.SysDicType">
+    insert into sys_dic_type (dic_id, dic_code, dic_name
+      )
+    values (#{dicId,jdbcType=VARCHAR}, #{dicCode,jdbcType=VARCHAR}, #{dicName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="net.jikuodong.springboot.po.SysDicType">
+    insert into sys_dic_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dicId != null">
+        dic_id,
+      </if>
+      <if test="dicCode != null">
+        dic_code,
+      </if>
+      <if test="dicName != null">
+        dic_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dicId != null">
+        #{dicId,jdbcType=VARCHAR},
+      </if>
+      <if test="dicCode != null">
+        #{dicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dicName != null">
+        #{dicName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="net.jikuodong.springboot.po.SysDicTypeExample" resultType="java.lang.Long">
+    select count(*) from sys_dic_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_dic_type
+    <set>
+      <if test="record.dicId != null">
+        dic_id = #{record.dicId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dicCode != null">
+        dic_code = #{record.dicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dicName != null">
+        dic_name = #{record.dicName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_dic_type
+    set dic_id = #{record.dicId,jdbcType=VARCHAR},
+      dic_code = #{record.dicCode,jdbcType=VARCHAR},
+      dic_name = #{record.dicName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="net.jikuodong.springboot.po.SysDicType">
+    update sys_dic_type
+    <set>
+      <if test="dicCode != null">
+        dic_code = #{dicCode,jdbcType=VARCHAR},
+      </if>
+      <if test="dicName != null">
+        dic_name = #{dicName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dic_id = #{dicId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="net.jikuodong.springboot.po.SysDicType">
+    update sys_dic_type
+    set dic_code = #{dicCode,jdbcType=VARCHAR},
+      dic_name = #{dicName,jdbcType=VARCHAR}
+    where dic_id = #{dicId,jdbcType=VARCHAR}
+  </update>
+</mapper>
